@@ -1,0 +1,59 @@
+
+package com.demo.ExcelProject;
+
+import java.io.FileInputStream;
+import org.apache.poi.xssf.usermodel.*;
+
+
+public class ReadFile {
+	
+	private static final String a1 = "/Users/pranav/Downloads/a1.xlsx";
+	private static final String a2 = "/Users/pranav/Downloads/a2.xlsx";
+	
+	public static void main(String arggs[]) {
+		comparefile(a1,a2);
+	}
+	
+	public static void comparefile(String a,String b) {
+		
+		try {
+				FileInputStream inputstram = new FileInputStream(a);
+				XSSFWorkbook workbook = new XSSFWorkbook(inputstram);
+				 XSSFSheet sheet = workbook.getSheetAt(0);
+				 
+				 int rows = sheet.getLastRowNum();
+				 int col = sheet.getRow(1).getLastCellNum();
+				 System.out.println("a rows = "+rows +"col= "+col);
+
+					FileInputStream binputstram = new FileInputStream(b);
+					XSSFWorkbook bworkbook = new XSSFWorkbook(binputstram);
+					 XSSFSheet bsheet = bworkbook.getSheetAt(0);
+					 
+					 int brows = bsheet.getLastRowNum();
+					 int bcol = bsheet.getRow(1).getLastCellNum();
+					 System.out.println("b rows = "+brows +"col "+bcol);
+					
+					 for(int p =1;p<=rows;p++) {
+						 for(int q=1;q<=brows;q++) {
+							 XSSFCell pcell = sheet.getRow(p).getCell(0);
+							
+							 XSSFCell qcell = bsheet.getRow(q).getCell(0);
+							
+							 double pstring = pcell.getNumericCellValue();
+							 double qstring = qcell.getNumericCellValue();
+							 
+							 if(pstring == qstring){
+								 System.out.print("equal "+ pstring);
+								System.out.println(sheet.getRow(p).getCell(1));
+							 }
+						 }
+					 }
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	
+		
+	}
+
+}
